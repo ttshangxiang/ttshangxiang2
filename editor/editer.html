@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./codemirror.css">
+    <title>Document</title>
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .file {
+            position: relative;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .file-header {
+            padding: 5px 10px;
+            background-color: #fafbfc;
+            border-bottom: 1px solid #e1e4e8;
+            border-top-left-radius: 2px;
+            border-top-right-radius: 2px;
+        }
+
+        .file-actions {
+            float: right;
+            padding-top: 2px;
+            font-size: 13px;
+        }
+        
+        .file-actions select {
+            margin-left: 5px;
+            height: 28px;
+            min-height: 28px;
+            padding: 3px 24px 2px 8px;
+            font-size: 12px;
+
+            display: inline-block;
+            max-width: 100%;
+            background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAUCAMAAACzvE1FAAAADFBMVEUzMzMzMzMzMzMzMzMKAG/3AAAAA3RSTlMAf4C/aSLHAAAAPElEQVR42q3NMQ4AIAgEQTn//2cLdRKppSGzBYwzVXvznNWs8C58CiussPJj8h6NwgorrKRdTvuV9v16Afn0AYFOB7aYAAAAAElFTkSuQmCC) no-repeat right 8px center;
+            background-size: 8px 10px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            line-height: 20px;
+            color: #24292e;
+            vertical-align: middle;
+            border: 1px solid #d1d5da;
+            border-radius: 3px;
+            outline: none;
+            box-shadow: inset 0 1px 2px rgba(27,31,35,0.075);
+        }
+
+        .tabnav-tabs {
+            margin: -6px 0 -6px -11px;
+        }
+
+        .tabnav-tabs button {
+            display: inline-block;
+            padding: 8px 12px;
+            font-size: 14px;
+            line-height: 20px;
+            color: #586069;
+            text-decoration: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            border-bottom: 0;
+            white-space: nowrap;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            outline: none;
+        }
+
+        .tabnav-tabs button.selected {
+            color: #24292e;
+            background-color: #fff;
+            border-color: #d1d5da;
+            padding: 12px 15px;
+            border-radius: 0;
+            font-weight: 600;
+        }
+
+        .tabnav-tabs button.selected:first-child {
+            border-top-left-radius: 3px;
+        }
+
+        .tabnav-tabs svg {
+            vertical-align: text-bottom;
+            display: inline-block;
+            fill: currentColor;
+        }
+        
+        .CodeMirror {
+            height: 718px;
+        }
+
+        .CodeMirror-gutters {
+            background: #fff;
+            border-right-width: 0;
+        }
+        .CodeMirror-lines {
+            cursor: text;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="file">
+        <div class="file-header">
+            <div class="file-actions">
+                <select class="form-select select-sm js-code-indent-mode">
+                    <optgroup label="Indent mode">
+                        <option value="space" selected="selected">Spaces</option>
+                        <option value="tab">Tabs</option>
+                    </optgroup>
+                </select>
+
+                <select class="form-select select-sm js-code-indent-width">
+                    <optgroup label="Indent size">
+                        <option value="2">2</option>
+                        <option value="4" selected="selected">4</option>
+                        <option value="8">8</option>
+                    </optgroup>
+                </select>
+
+                <select class="form-select select-sm js-code-wrap-mode">
+                    <optgroup label="Line wrap mode">
+                        <option value="off">No wrap</option>
+                        <option value="on" selected="selected">Soft wrap</option>
+                    </optgroup>
+                </select>
+            </div>
+            <nav class="tabnav-tabs">
+                <button type="button" class="btn-link code selected tabnav-tab js-blob-edit-code">
+                    <svg aria-hidden="true" class="octicon octicon-code" height="16" version="1.1" viewBox="0 0 14 16" width="14">
+                        <path fill-rule="evenodd" d="M9.5 3L8 4.5 11.5 8 8 11.5 9.5 13 14 8 9.5 3zm-5 0L0 8l4.5 5L6 11.5 2.5 8 6 4.5 4.5 3z"></path>
+                    </svg>
+                    Edit file
+                </button>
+                <button type="button" class="btn-link preview tabnav-tab js-blob-edit-preview">
+                    <svg aria-hidden="true" class="octicon octicon-eye" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+                        <path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"></path>
+                    </svg>
+                    Preview changes
+                </button>
+            </nav>
+        </div>
+        <textarea name="heh" id="textarea" rows="35"></textarea>
+    </div>
+    <script type="text/javascript" src="./codemirror.js"></script>
+    <script>
+        var myTextarea = document.getElementById('textarea');
+        var editor = CodeMirror.fromTextArea(myTextarea, {
+            lineNumbers: true
+        });
+    </script>
+</body>
+
+</html>
