@@ -4,28 +4,28 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "server": "tsc-watch --onSuccess \"node build/app.js\""
+    "server": "tsc -p server & nodemon server/build/app.js"
   },
   "repository": "https://github.com/ttshangxiang/ttshangxiang2.git",
   "author": "jhq",
   "license": "MIT",
   "dependencies": {
-    "copy-webpack-plugin": "^4.3.1",
-    "css-loader": "^0.28.7",
-    "express": "^4.16.2",
-    "extract-text-webpack-plugin": "1.0.1",
-    "file-loader": "0.8.4",
-    "html-webpack-plugin": "^2.30.1",
+    "@types/react": "^16.0.34",
+    "@types/react-dom": "^16.0.3",
+    "awesome-typescript-loader": "^3.4.1",
     "koa": "^2.4.1",
-    "less": "^2.7.3",
-    "less-loader": "2.2.2",
-    "style-loader": "^0.19.1",
+    "nodemon": "^1.14.8",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "source-map-loader": "^0.2.3",
     "ts-loader": "^3.2.0",
-    "tsc-watch": "^1.0.13",
     "typescript": "^2.6.2",
-    "url-loader": "^0.6.2",
-    "webpack": "1.13.1",
-    "webpack-dev-middleware": "1.12.0",
-    "webpack-hot-middleware": "^2.21.0"
+    "webpack": "^3.10.0"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "server/*"
+    ],
+    "delay": "2500"
   }
 }
