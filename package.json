@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "npm run dev",
+    "dev": "node dev-server",
     "server": "tsc -p server & nodemon server/build/app.js"
   },
   "repository": "https://github.com/ttshangxiang/ttshangxiang2.git",
@@ -12,15 +13,22 @@
   "dependencies": {
     "@types/react": "^16.0.34",
     "@types/react-dom": "^16.0.3",
+    "@types/react-hot-loader": "^3.0.5",
+    "@types/webpack-env": "^1.13.3",
     "awesome-typescript-loader": "^3.4.1",
+    "css-loader": "^0.28.8",
+    "html-webpack-plugin": "^2.30.1",
     "koa": "^2.4.1",
     "nodemon": "^1.14.8",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-hot-loader": "^3.1.3",
     "source-map-loader": "^0.2.3",
+    "style-loader": "^0.19.1",
     "ts-loader": "^3.2.0",
     "typescript": "^2.6.2",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.10.1"
   },
   "nodemonConfig": {
     "watch": [
