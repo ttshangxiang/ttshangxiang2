@@ -1,0 +1,46 @@
+
+@import '~src/styles/color.less';
+
+.home-top {
+    text-align: center;
+    padding: 48px 0 16px;
+}
+
+.home-name {
+    font-size: 20px;
+    color: @color1;
+    letter-spacing: -10px;
+    text-indent: -10px;
+    transition: letter-spacing .5s, text-indent .5s;
+}
+
+.home-list {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.home-list-item {
+    text-align: center;
+    line-height: 42px;
+    font-size: 16px;
+    padding: 0 12px;
+    letter-spacing: -10px;
+    text-indent: -10px;
+    transition: letter-spacing .5s, text-indent .5s;
+    a {
+        color: #999;
+    }
+    a:hover {
+        color: @color1;
+    }
+}
+
+.animate .home-list-item {
+    letter-spacing: 10px;
+    text-indent: 10px;
+}
+
+.animate.home-name {
+    letter-spacing: 0;
+    text-indent: 0;
+}

@@ -1,5 +1,6 @@
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 let webpack = require('webpack');
+let path = require('path');
 module.exports = {
   entry: ['react-hot-loader/patch', './src/index.tsx'],
   output: {
@@ -12,7 +13,10 @@ module.exports = {
 
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.ts', '.tsx', '.js', '.json']
+    extensions: ['.ts', '.tsx', '.js', '.json'],
+    alias: {  
+      src: path.resolve(__dirname, './src')  
+    }
   },
 
   module: {
@@ -34,6 +38,10 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.less$/,
+        use: ['style-loader', 'css-loader', 'less-loader']
       }
     ]
   },

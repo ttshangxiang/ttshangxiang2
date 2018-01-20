@@ -1,10 +1,10 @@
 // 程序入口
-import Koa = require('koa');
+import * as Koa from 'koa';
 const app = new Koa();
 
 app.use(async ctx => {
-    ctx.body = 'Hello xyt';
+    ctx.body = 'Hello xixihaha';
 });
 
 app.listen(3000);
-console.log('启动个屁');
+console.log('启动个屁了');

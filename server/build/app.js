@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Koa = require("koa");
 const app = new Koa();
 app.use((ctx) => __awaiter(this, void 0, void 0, function* () {
-    ctx.body = 'Hello xyt';
+    ctx.body = 'Hello xixihaha';
 }));
 app.listen(3000);
-console.log('启动个屁');
+console.log('启动个屁了');

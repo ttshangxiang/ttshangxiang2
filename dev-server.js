@@ -6,7 +6,8 @@ const options = {
   contentBase: './dist',
   hot: true,
   stats: {colors: true},
-  host: 'localhost'
+  host: 'localhost',
+  historyApiFallback: true // 配合BrowserRouter
 };
 
 webpackDevServer.addDevServerEntrypoints(config, options);
