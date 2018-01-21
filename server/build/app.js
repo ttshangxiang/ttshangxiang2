@@ -10,9 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 // 程序入口
 const Koa = require("koa");
+const fs = require("fs");
+const path = require("path");
+const serve = require("koa-static");
 const app = new Koa();
+app.use(serve(path.join(__dirname, '../../dist'))); //静态文件目录
 app.use((ctx) => __awaiter(this, void 0, void 0, function* () {
-    ctx.body = 'Hello xixihaha';
+    ctx.type = 'html';
+    ctx.body = fs.createReadStream(path.join(__dirname, '../../dist/index.html'));
 }));
 app.listen(3000);
 console.log('启动个屁了');

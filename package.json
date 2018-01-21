@@ -5,6 +5,8 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "node dev-server",
+    "dist": "webpack -p",
+    "pm2": "pm2 start server/build/app.js --name t2",
     "server": "tsc -p server & nodemon server/build/app.js"
   },
   "repository": "https://github.com/ttshangxiang/ttshangxiang2.git",
@@ -20,9 +22,11 @@
     "css-loader": "^0.28.8",
     "html-webpack-plugin": "^2.30.1",
     "koa": "^2.4.1",
+    "koa-static": "^4.0.2",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "nodemon": "^1.14.8",
+    "pm2": "^2.9.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-hot-loader": "^3.1.3",
