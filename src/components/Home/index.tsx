@@ -1,5 +1,6 @@
 import * as React from "react";
 import './index.less';
+import { Sign } from '../Xqj/Sign';
 
 interface HomeProps {};
 interface HomeState { animate: boolean };
@@ -49,6 +50,7 @@ export class Home extends React.Component<HomeProps, HomeState> {
                     <ul className={"home-list " + animate}>
                         {dom}
                     </ul>
+                    <Sign />
                 </div>
             </div>
         );
