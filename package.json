@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "node dev-server",
-    "dist": "webpack -p",
+    "dist": "cross-env NODE_ENV=production webpack",
     "pm2": "pm2 start server/build/app.js --name t2",
     "server": "tsc -p server & nodemon server/build/app.js"
   },
@@ -19,7 +19,9 @@
     "@types/react-router-dom": "^4.2.3",
     "@types/webpack-env": "^1.13.3",
     "awesome-typescript-loader": "^3.4.1",
+    "cross-env": "^5.1.3",
     "css-loader": "^0.28.8",
+    "file-loader": "^1.1.6",
     "html-webpack-plugin": "^2.30.1",
     "koa": "^2.4.1",
     "koa-router": "^7.3.0",

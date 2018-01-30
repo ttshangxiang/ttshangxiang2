@@ -1,8 +1,9 @@
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 let webpack = require('webpack');
 let path = require('path');
-module.exports = {
-  entry: ['react-hot-loader/patch', './src/index.tsx'],
+
+const base = {
+  entry: ['./src/index.tsx'],
   output: {
     filename: './bundle.js',
     path: __dirname + '/dist'
@@ -47,7 +48,13 @@ module.exports = {
       // images
       {
         test: /\.(?:svg|png|jpg)$/,
-        use: ['url-loader']
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 8192,
+            name: './imgs/[hash:8].[name].[ext]'
+          }
+        }]
       }
     ]
   },
@@ -58,16 +65,36 @@ module.exports = {
       template: './src/index.html',
       filename: 'index.html'
     }),
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
-  ],
+    new webpack.NamedModulesPlugin()
+    
+  ]
+}
 
-  // When importing a module whose path matches one of the following, just
-  // assume a corresponding global variable exists and use that instead.
-  // This is important because it allows us to avoid bundling all of our
-  // dependencies, which allows browsers to cache those libraries between builds.
-  externals: {
-    // 'react': 'React',
-    // 'react-dom': 'ReactDOM'
-  },
-};
+let config = base;
+if (process.env.NODE_ENV == 'production') {
+  config = Object.assign({}, base, {
+    output: {
+      filename: './[hash:8].bundle.js',
+      path: __dirname + '/dist'
+    },
+    devtool: false,
+    plugins: base.plugins.concat([
+      new webpack.optimize.UglifyJsPlugin(),
+      new webpack.optimize.OccurrenceOrderPlugin(),
+      new webpack.optimize.AggressiveMergingPlugin(),
+      new webpack.NoEmitOnErrorsPlugin()
+    ])
+  });
+} else {
+  config = Object.assign({}, base, {
+    // Enable sourcemaps for debugging webpack's output.
+    devtool: 'source-map',
+    entry: ['react-hot-loader/patch', './src/index.tsx'],
+    plugins: base.plugins.concat([
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoEmitOnErrorsPlugin()
+    ])
+  });
+}
+
+module.exports = config;
