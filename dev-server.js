@@ -7,7 +7,13 @@ const options = {
   hot: true,
   stats: {colors: true},
   host: 'localhost',
-  historyApiFallback: true // 配合BrowserRouter
+  historyApiFallback: true, // 配合BrowserRouter
+  proxy: {
+    '/api': {
+        target: 'http://localhost:3000',
+        secure: false
+    }
+  }
 };
 
 webpackDevServer.addDevServerEntrypoints(config, options);
