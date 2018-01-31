@@ -107,7 +107,7 @@ export class Xqj extends React.Component<{}, XqjState> {
 interface XqjItemProps { item: any };
 class XqjItem extends React.Component<XqjItemProps, {}> {
     render () {
-        const {info, time, user_name} = this.props.item;
+        const {info, time, user_name, id} = this.props.item;
         let avatar = jhq;
         if (user_name == '小青椒') {
             avatar = xyt;
@@ -119,7 +119,8 @@ class XqjItem extends React.Component<XqjItemProps, {}> {
                     <div className="xqj-item-name">{user_name}</div>
                 </div>
                 <div className="xqj-item-content">
-                    <span>{info}</span>
+                    <span className="xqj-item-text">{info}</span>
+                    <span className="xqj-item-id">#{id}</span>
                     {this.props.children}
                 </div>
                 <div className="xqj-item-avatar"><img src={avatar} alt={user_name}/></div>
