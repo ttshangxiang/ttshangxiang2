@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Router = require("koa-router");
 const db_1 = require("./db");
 const moment = require("moment");
-const request = require("request");
+const https = require("https");
 const router = new Router({
     prefix: '/api'
 });
@@ -91,24 +91,21 @@ function requestIp(ip) {
         method: 'GET',
         headers: {
             'Authorization': 'APPCODE e1b1da03861f4b4abe6477503d9fdc54'
-        }
+        },
+        agent: false
     };
     return new Promise((resolve, reject) => {
-        request(options, (err, res, body) => {
-            console.log(body);
-            console.log(err);
-            if (err) {
-                resolve('');
-                return;
-            }
-            try {
-                const json = JSON.parse(body);
-                resolve(json.data);
-            }
-            catch (error) {
-                console.log(error);
-                resolve('');
-            }
+        var req = https.request(options, function (res) {
+            console.log(res.statusCode);
+            res.on('data', function (d) {
+                console.log(d);
+                resolve(d);
+            });
+        });
+        req.end();
+        req.on('error', function (e) {
+            console.error(e);
+            resolve('');
         });
     });
 }
