@@ -1,5 +1,6 @@
 import * as Router from 'koa-router';
 import DB from './db';
+import * as moment from 'moment';
 
 const router = new Router({
     prefix: '/api'
@@ -37,5 +38,25 @@ router.get('/xiaoqingjiao', async (ctx, next) => {
     }
     ctx.body = await DB(query);
 });
+
+router.get('/visit', async (ctx, next) => {
+    const ip = ctx.ip;
+    const { pathname, renderer } = ctx.query;
+    const uid = ctx.cookies.get('uid');
+    const insert = async (err, db) => {
+        if (err) {
+            return '错误';
+        }
+        let r = await db.collection('visited').insert({ ip, pathname, renderer, uid, ...now()});
+        return r.result;
+    }
+    ctx.body = await DB(insert)
+});
+
+function now () {
+    const create_date = moment().format('YYYY-MM-DD HH:mm:ss');
+    const update_date = create_date;
+    return {create_date, update_date};
+}
 
 export default router;

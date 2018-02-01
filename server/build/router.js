@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const Router = require("koa-router");
 const db_1 = require("./db");
+const moment = require("moment");
 const router = new Router({
     prefix: '/api'
 });
@@ -43,4 +44,22 @@ router.get('/xiaoqingjiao', (ctx, next) => __awaiter(this, void 0, void 0, funct
     });
     ctx.body = yield db_1.default(query);
 }));
+router.get('/visit', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
+    const ip = ctx.ip;
+    const { pathname, renderer } = ctx.query;
+    const uid = ctx.cookies.get('uid');
+    const insert = (err, db) => __awaiter(this, void 0, void 0, function* () {
+        if (err) {
+            return '错误';
+        }
+        let r = yield db.collection('visited').insert(Object.assign({ ip, pathname, renderer, uid }, now()));
+        return r.result;
+    });
+    ctx.body = yield db_1.default(insert);
+}));
+function now() {
+    const create_date = moment().format('YYYY-MM-DD HH:mm:ss');
+    const update_date = create_date;
+    return { create_date, update_date };
+}
 exports.default = router;

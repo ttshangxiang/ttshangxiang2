@@ -1,6 +1,7 @@
 import * as React from "react";
 import './index.less';
 import { Sign } from '../Xqj/Sign';
+import { Link } from 'react-router-dom';
 
 interface HomeProps {};
 interface HomeState { animate: boolean };
@@ -36,7 +37,7 @@ export class Home extends React.Component<HomeProps, HomeState> {
             index++;
             return (
                 <li className="home-list-item" key={index}>
-                    <a href={item.path}>{item.name}</a>
+                    <Link to={item.path}>{item.name}</Link>
                 </li>
             );
         });
