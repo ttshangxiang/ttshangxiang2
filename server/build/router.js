@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Router = require("koa-router");
 const db_1 = require("./db");
 const moment = require("moment");
+const request = require("request");
 const router = new Router({
     prefix: '/api'
 });
@@ -48,11 +49,31 @@ router.get('/visit', (ctx, next) => __awaiter(this, void 0, void 0, function* ()
     const ip = ctx.headers['x-real-ip'];
     const { pathname, renderer } = ctx.query;
     const uid = ctx.cookies.get('uid');
+    let ipAddress = {};
+    if (ip) {
+        const queryIp = (err, db) => __awaiter(this, void 0, void 0, function* () {
+            if (err) {
+                return '';
+            }
+            let r = yield db.collection('ips').find({ ip });
+            return r;
+        });
+        const query = yield db_1.default(queryIp);
+        if (query && query[0] && query[0].data) {
+            ipAddress = query[0].data;
+        }
+        else {
+            ipAddress = yield requestIp(ip);
+            yield db_1.default((err, db) => __awaiter(this, void 0, void 0, function* () {
+                !err && (yield db.collection('ips').insert({ ip, data: ipAddress }));
+            }));
+        }
+    }
     const insert = (err, db) => __awaiter(this, void 0, void 0, function* () {
         if (err) {
             return '错误';
         }
-        let r = yield db.collection('visited').insert(Object.assign({ ip, pathname, renderer, uid }, now()));
+        let r = yield db.collection('visited').insert(Object.assign({ ip, pathname, renderer, uid, ipAddress }, now()));
         return r.result;
     });
     ctx.body = yield db_1.default(insert);
@@ -61,5 +82,29 @@ function now() {
     const create_date = moment().format('YYYY-MM-DD HH:mm:ss');
     const update_date = create_date;
     return { create_date, update_date };
+}
+function requestIp(ip) {
+    const options = {
+        method: 'get',
+        url: `https://dm-81.data.aliyun.com/rest/160601/ip/getIpInfo.json?ip=${ip}`,
+        headers: {
+            'Authorization': 'APPCODE e1b1da03861f4b4abe6477503d9fdc54'
+        }
+    };
+    return new Promise((resolve, reject) => {
+        request(options, (err, res, body) => {
+            if (err) {
+                resolve('');
+                return;
+            }
+            try {
+                const json = JSON.parse(body);
+                resolve(json.data);
+            }
+            catch (error) {
+                resolve('');
+            }
+        });
+    });
 }
 exports.default = router;
