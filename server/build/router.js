@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Router = require("koa-router");
 const db_1 = require("./db");
 const moment = require("moment");
-const https = require("https");
+const request = require("request");
 const router = new Router({
     prefix: '/api'
 });
@@ -85,27 +85,28 @@ function now() {
 }
 function requestIp(ip) {
     const options = {
-        hostname: 'dm-81.data.aliyun.com',
-        port: 443,
-        path: `/rest/160601/ip/getIpInfo.json?ip=${ip}`,
-        method: 'GET',
+        method: 'get',
+        url: `https://dm-81.data.aliyun.com/rest/160601/ip/getIpInfo.json?ip=${ip}`,
+        rejectUnauthorized: false,
         headers: {
             'Authorization': 'APPCODE e1b1da03861f4b4abe6477503d9fdc54'
-        },
-        agent: false
+        }
     };
     return new Promise((resolve, reject) => {
-        var req = https.request(options, function (res) {
-            console.log(res.statusCode);
-            res.on('data', function (d) {
-                console.log(d);
-                resolve(d);
-            });
-        });
-        req.end();
-        req.on('error', function (e) {
-            console.error(e);
-            resolve('');
+        request(options, (err, res, body) => {
+            if (err) {
+                resolve('');
+                console.log(err);
+                return;
+            }
+            try {
+                const json = JSON.parse(body);
+                resolve(json.data);
+            }
+            catch (error) {
+                console.log(error);
+                resolve('');
+            }
         });
     });
 }
