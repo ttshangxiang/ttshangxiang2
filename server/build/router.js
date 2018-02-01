@@ -45,6 +45,7 @@ router.get('/xiaoqingjiao', (ctx, next) => __awaiter(this, void 0, void 0, funct
     ctx.body = yield db_1.default(query);
 }));
 router.get('/visit', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
+    console.log(ctx.headers);
     const ip = ctx.headers['X-Real-IP'];
     const { pathname, renderer } = ctx.query;
     const uid = ctx.cookies.get('uid');

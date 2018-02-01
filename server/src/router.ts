@@ -40,6 +40,7 @@ router.get('/xiaoqingjiao', async (ctx, next) => {
 });
 
 router.get('/visit', async (ctx, next) => {
+    console.log(ctx.headers)
     const ip = ctx.headers['X-Real-IP'];
     const { pathname, renderer } = ctx.query;
     const uid = ctx.cookies.get('uid');
