@@ -50,16 +50,16 @@ router.get('/visit', async (ctx, next) => {
             if (err) {
                 return '';
             }
-            let r = await db.collection('ips').find({ ip });
+            let r = await db.collection('ips').findOne({ ip });
             return r;
         }
-        const query = await DB(queryIp);
-        if (query && query[0] && query[0].data) {
-            ipAddress = query[0].data;
+        const queryIpR = await DB(queryIp);
+        if (queryIpR && queryIpR._id) {
+            ipAddress = queryIpR;
         } else {
             ipAddress = await requestIp(ip);
             await DB(async (err, db) => {
-                !err && await db.collection('ips').insert({ip, data: ipAddress})
+                !err && await db.collection('ips').insert({...ipAddress})
             });
         }
     }
@@ -91,7 +91,7 @@ function requestIp (ip) {
     return new Promise((resolve, reject) => {
         request(options, (err, res, body) => {
             if (err) {
-                resolve('');
+                resolve({});
                 console.log(err);
                 return;
             }
@@ -100,7 +100,7 @@ function requestIp (ip) {
                 resolve(json.data);
             } catch (error) {
                 console.log(error)
-                resolve('');
+                resolve({});
             }
         });
     });

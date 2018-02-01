@@ -55,17 +55,17 @@ router.get('/visit', (ctx, next) => __awaiter(this, void 0, void 0, function* ()
             if (err) {
                 return '';
             }
-            let r = yield db.collection('ips').find({ ip });
+            let r = yield db.collection('ips').findOne({ ip });
             return r;
         });
-        const query = yield db_1.default(queryIp);
-        if (query && query[0] && query[0].data) {
-            ipAddress = query[0].data;
+        const queryIpR = yield db_1.default(queryIp);
+        if (queryIpR && queryIpR._id) {
+            ipAddress = queryIpR;
         }
         else {
             ipAddress = yield requestIp(ip);
             yield db_1.default((err, db) => __awaiter(this, void 0, void 0, function* () {
-                !err && (yield db.collection('ips').insert({ ip, data: ipAddress }));
+                !err && (yield db.collection('ips').insert(Object.assign({}, ipAddress)));
             }));
         }
     }
@@ -95,7 +95,7 @@ function requestIp(ip) {
     return new Promise((resolve, reject) => {
         request(options, (err, res, body) => {
             if (err) {
-                resolve('');
+                resolve({});
                 console.log(err);
                 return;
             }
@@ -105,7 +105,7 @@ function requestIp(ip) {
             }
             catch (error) {
                 console.log(error);
-                resolve('');
+                resolve({});
             }
         });
     });
