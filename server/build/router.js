@@ -85,8 +85,10 @@ function now() {
 }
 function requestIp(ip) {
     const options = {
-        method: 'get',
-        url: `https://dm-81.data.aliyun.com/rest/160601/ip/getIpInfo.json?ip=${ip}`,
+        hostname: 'dm-81.data.aliyun.com',
+        port: 443,
+        path: `/rest/160601/ip/getIpInfo.json?ip=${ip}`,
+        method: 'GET',
         headers: {
             'Authorization': 'APPCODE e1b1da03861f4b4abe6477503d9fdc54'
         }
@@ -94,6 +96,7 @@ function requestIp(ip) {
     return new Promise((resolve, reject) => {
         request(options, (err, res, body) => {
             console.log(body);
+            console.log(err);
             if (err) {
                 resolve('');
                 return;
