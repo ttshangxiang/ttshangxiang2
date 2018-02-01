@@ -93,6 +93,7 @@ function requestIp(ip) {
     };
     return new Promise((resolve, reject) => {
         request(options, (err, res, body) => {
+            console.log(body);
             if (err) {
                 resolve('');
                 return;
@@ -102,6 +103,7 @@ function requestIp(ip) {
                 resolve(json.data);
             }
             catch (error) {
+                console.log(error);
                 resolve('');
             }
         });
