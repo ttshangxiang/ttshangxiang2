@@ -12,18 +12,43 @@ const Router = require("koa-router");
 const db_1 = require("./db");
 const moment = require("moment");
 const request = require("request");
+const mongodb_1 = require("mongodb");
 const router = new Router({
     prefix: '/api'
 });
-router.get('/article', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
+router.get('/article/:id', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
+    console.log(ctx.params.id);
     const query = (err, db) => __awaiter(this, void 0, void 0, function* () {
         if (err) {
-            return '错误';
+            return {};
         }
-        let r = yield db.collection('article').find().toArray();
-        return r;
+        return yield db.collection('article').findOne({ _id: mongodb_1.ObjectId(ctx.params.id) });
     });
-    ctx.body = yield db_1.default(query);
+    const data = yield db_1.default(query);
+    ctx.set('Content-Type', 'text/html');
+    ctx.body = '<pre style="word-wrap: break-word; white-space: pre-wrap;">' + (data.content || '无数据') + '</pre>';
+}));
+router.get('/article', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
+    const type = ctx.query.type;
+    let queryObj = {};
+    if (type) {
+        queryObj = { type: parseInt(type) };
+    }
+    const query = (err, db) => __awaiter(this, void 0, void 0, function* () {
+        if (err) {
+            return { code: 1 };
+        }
+        let r = yield db.collection('article').find(queryObj).toArray();
+        return {
+            code: 0,
+            data: r
+        };
+    });
+    const data = yield db_1.default(query);
+    if (data.code !== 0) {
+        ctx.status = 500;
+    }
+    ctx.body = data;
 }));
 router.get('/visited', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
     const query = (err, db) => __awaiter(this, void 0, void 0, function* () {

@@ -2,20 +2,46 @@ import * as Router from 'koa-router';
 import DB from './db';
 import * as moment from 'moment';
 import * as request from 'request';
+import { ObjectId } from 'mongodb';
 
 const router = new Router({
     prefix: '/api'
 });
 
-router.get('/article', async (ctx, next) => {
+router.get('/article/:id', async (ctx, next) => {
+    console.log(ctx.params.id)
     const query = async (err, db) => {
         if (err) {
-            return '错误';
+            return {};
         }
-        let r = await db.collection('article').find().toArray();
-        return r;
+        return await db.collection('article').findOne({_id: ObjectId(ctx.params.id)});
     }
-    ctx.body = await DB(query);
+    const data = await DB(query);
+    ctx.set('Content-Type', 'text/html');
+    ctx.body = '<pre style="word-wrap: break-word; white-space: pre-wrap;">' + (data.content || '无数据') + '</pre>';
+});
+
+router.get('/article', async (ctx, next) => {
+    const type = ctx.query.type;
+    let queryObj = {};
+    if (type) {
+        queryObj = { type: parseInt(type) };
+    }
+    const query = async (err, db) => {
+        if (err) {
+            return {code: 1};
+        }
+        let r = await db.collection('article').find(queryObj).toArray();
+        return {
+            code: 0,
+            data: r
+        };
+    }
+    const data = await DB(query);
+    if (data.code !== 0) {
+        ctx.status = 500;
+    }
+    ctx.body = data;
 });
 
 router.get('/visited', async (ctx, next) => {
