@@ -25,10 +25,11 @@ export class List extends React.Component<ListProps, ListState> {
     setAnimate () {
         setTimeout(() => {
             this.setState({ animate: true });
-        }, 1);
+        }, 100);
     }
 
     componentDidMount () {
+        this.setState({ animate: false });
         if (this.props.list) {
             this.setState({ list: this.props.list });
             this.setAnimate();
