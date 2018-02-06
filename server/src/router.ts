@@ -9,16 +9,21 @@ const router = new Router({
 });
 
 router.get('/article/:id', async (ctx, next) => {
-    console.log(ctx.params.id)
     const query = async (err, db) => {
         if (err) {
-            return {};
+            return {code: 1};
         }
-        return await db.collection('article').findOne({_id: ObjectId(ctx.params.id)});
+        var r = await db.collection('article').findOne({_id: ObjectId(ctx.params.id)});
+        return {
+            code: 0,
+            data: r
+        }
     }
     const data = await DB(query);
-    ctx.set('Content-Type', 'text/html');
-    ctx.body = '<pre style="word-wrap: break-word; white-space: pre-wrap;">' + (data.content || '无数据') + '</pre>';
+    if (data.code !== 0) {
+        ctx.status = 500;
+    }
+    ctx.body = data;
 });
 
 router.get('/article', async (ctx, next) => {

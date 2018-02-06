@@ -17,16 +17,21 @@ const router = new Router({
     prefix: '/api'
 });
 router.get('/article/:id', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
-    console.log(ctx.params.id);
     const query = (err, db) => __awaiter(this, void 0, void 0, function* () {
         if (err) {
-            return {};
+            return { code: 1 };
         }
-        return yield db.collection('article').findOne({ _id: mongodb_1.ObjectId(ctx.params.id) });
+        var r = yield db.collection('article').findOne({ _id: mongodb_1.ObjectId(ctx.params.id) });
+        return {
+            code: 0,
+            data: r
+        };
     });
     const data = yield db_1.default(query);
-    ctx.set('Content-Type', 'text/html');
-    ctx.body = '<pre style="word-wrap: break-word; white-space: pre-wrap;">' + (data.content || '无数据') + '</pre>';
+    if (data.code !== 0) {
+        ctx.status = 500;
+    }
+    ctx.body = data;
 }));
 router.get('/article', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
     const type = ctx.query.type;

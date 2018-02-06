@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Redirect, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Redirect, BrowserRouter as Router } from 'react-router-dom';
 import { Home } from './Home';
 import { Hello } from './Hello';
 import { Xqj } from './Xqj';
 import { List } from './List';
-import { MyRoute}  from './MyRoute'
+import { MyRoute}  from './MyRoute';
+import { Article } from './Article';
 import 'whatwg-fetch';
 
 export interface AppProps {}
@@ -14,17 +15,18 @@ export default class App extends React.Component<AppProps, {}> {
         return (
             <Router>
                 <div>
-                    <MyRoute exact path='/' component={Home}></MyRoute>
-                    <MyRoute path='/i' component={I}></MyRoute>
-                    <MyRoute path='/like' component={Like}></MyRoute>
-                    <MyRoute path='/!like' component={DontLike}></MyRoute>
-                    <MyRoute path='/why' component={Why}></MyRoute>
-                    <MyRoute path='/!why' component={WhyNot}></MyRoute>
-                    <MyRoute path='/think' component={Think}></MyRoute>
-                    <MyRoute path='/daily' component={Daily}></MyRoute>
-                    <MyRoute path='/about' component={About}></MyRoute>
-                    <MyRoute path='/hello' component={Hello}></MyRoute>
-                    <MyRoute path='/xqj' component={Xqj}></MyRoute>
+                    <MyRoute exact path='/' component={Home} />
+                    <MyRoute path='/i' component={I} />
+                    <MyRoute path='/like' component={Like} />
+                    <MyRoute path='/!like' component={DontLike} />
+                    <MyRoute path='/why' component={Why} />
+                    <MyRoute path='/!why' component={WhyNot} />
+                    <MyRoute path='/think' component={Think} />
+                    <MyRoute path='/daily' component={Daily} />
+                    <MyRoute path='/about' component={About} />
+                    <MyRoute path='/hello' component={Hello} />
+                    <MyRoute path='/xqj' component={Xqj} />
+                    <Route path='/article' component={Article}/>
                 </div>
             </Router>
         );

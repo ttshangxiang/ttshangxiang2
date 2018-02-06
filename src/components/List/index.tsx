@@ -38,7 +38,7 @@ export class List extends React.Component<ListProps, ListState> {
             .then(json => {
                 if (json.code == 0) {
                     let list = json.data.map((item: any) => {
-                        item.path = '/api/article/' + item._id;
+                        item.path = '/article?id=' + item._id;
                         return item;
                     })
                     this.setState({ list });
