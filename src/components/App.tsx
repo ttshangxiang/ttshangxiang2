@@ -6,6 +6,7 @@ import { Xqj } from './Xqj';
 import { List } from './List';
 import { MyRoute}  from './MyRoute';
 import { Article } from './Article';
+import { Admin } from './Admin';
 import 'whatwg-fetch';
 
 export interface AppProps {}
@@ -27,6 +28,7 @@ export default class App extends React.Component<AppProps, {}> {
                     <MyRoute path='/hello' component={Hello} />
                     <MyRoute path='/xqj' component={Xqj} />
                     <Route path='/article' component={Article}/>
+                    <Route path='/admin' component={Admin}/>
                 </div>
             </Router>
         );
@@ -35,7 +37,15 @@ export default class App extends React.Component<AppProps, {}> {
 
 class I extends React.Component<{}, {}> {
     render () {
-        return <List module="我" url="/api/article?type=0"/>;
+        let age = new Date().getFullYear() - 1991;
+        let list = [
+            {title: '--'},
+            {title: '男'},
+            {title: age},
+            {title: '长沙 - 深圳'},
+            {title: 'ttshangxiang@qq.com'}
+        ];
+        return <List module="我" list={list} url=""/>;
     }
 }
 

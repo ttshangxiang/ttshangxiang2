@@ -56,7 +56,7 @@ export class List extends React.Component<ListProps, ListState> {
             index++;
             return (
                 <li className="module-list-item" key={index}>
-                    <Link to={item.path}>{item.title}</Link>
+                    {item.path ? <Link to={item.path}>{item.title}</Link> : item.title}
                 </li>
             );
         });
