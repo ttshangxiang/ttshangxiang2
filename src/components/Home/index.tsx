@@ -15,11 +15,10 @@ export class Home extends React.Component<HomeProps, HomeState> {
     render() {
         let list = [
             {title: '我', path: '/i'},
+            {title: '我的', path: '/my'},
             {title: '我喜欢', path: '/like'},
             {title: '我不喜欢', path: '/!like'},
-            {title: '我为什么喜欢', path: '/why'},
-            {title: '我为什么不喜欢', path: '/!why'},
-            {title: '我觉得', path: '/think'},
+            {title: '我认为', path: '/think'},
             {title: '我今天', path: '/daily'},
             {title: '关于', path: '/about'},
             {title: '----------', path: '/hello'}

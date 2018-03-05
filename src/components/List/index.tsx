@@ -45,6 +45,10 @@ export class List extends React.Component<ListProps, ListState> {
                     this.setState({ list });
                     this.setAnimate();
                 }
+                this.setAnimate();
+            })
+            .catch(err => {
+                this.setAnimate();
             })
         }
     }

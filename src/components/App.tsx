@@ -6,7 +6,12 @@ import { Xqj } from './Xqj';
 import { List } from './List';
 import { MyRoute}  from './MyRoute';
 import { Article } from './Article';
+import { My } from './My';
 import { Admin } from './Admin';
+import { Avisited } from './Admin/Avisited';
+import { Aarticle } from './Admin/Aarticle';
+import { Avideo } from './Admin/Avideo';
+import { Amusic } from './Admin/Amusic';
 import 'whatwg-fetch';
 
 export interface AppProps {}
@@ -18,17 +23,20 @@ export default class App extends React.Component<AppProps, {}> {
                 <div>
                     <MyRoute exact path='/' component={Home} />
                     <MyRoute path='/i' component={I} />
+                    <MyRoute path='/my' component={My} />
                     <MyRoute path='/like' component={Like} />
-                    <MyRoute path='/!like' component={DontLike} />
-                    <MyRoute path='/why' component={Why} />
-                    <MyRoute path='/!why' component={WhyNot} />
+                    <MyRoute path='/hate' component={Hate} />
                     <MyRoute path='/think' component={Think} />
                     <MyRoute path='/daily' component={Daily} />
                     <MyRoute path='/about' component={About} />
                     <MyRoute path='/hello' component={Hello} />
                     <MyRoute path='/xqj' component={Xqj} />
                     <Route path='/article' component={Article}/>
-                    <Route path='/admin' component={Admin}/>
+                    <Route exact path='/admin' component={Admin}/>
+                    <Route path='/admin/visited' component={Avisited}/>
+                    <Route path='/admin/article' component={Aarticle}/>
+                    <Route path='/admin/video' component={Avideo}/>
+                    <Route path='/admin/music' component={Amusic}/>
                 </div>
             </Router>
         );
@@ -39,11 +47,12 @@ class I extends React.Component<{}, {}> {
     render () {
         let age = new Date().getFullYear() - 1991;
         let list = [
-            {title: '--'},
+            {title: '普通人'},
             {title: '男'},
             {title: age},
             {title: '长沙 - 深圳'},
-            {title: 'ttshangxiang@qq.com'}
+            // {title: '我的照片', path: '/my/photos'},
+            {title: '更多', path: '/about'}
         ];
         return <List module="我" list={list} url=""/>;
     }
@@ -55,21 +64,9 @@ class Like extends React.Component<{}, {}> {
     }
 }
 
-class DontLike extends React.Component<{}, {}> {
+class Hate extends React.Component<{}, {}> {
     render () {
         return <List module="我不喜欢" url="/api/article?type=2"/>;
-    }
-}
-
-class Why extends React.Component<{}, {}> {
-    render () {
-        return <List module="我为什么喜欢" url="/api/article?type=3"/>;
-    }
-}
-
-class WhyNot extends React.Component<{}, {}> {
-    render () {
-        return <List module="我为什么不喜欢" url="/api/article?type=4"/>;
     }
 }
 
