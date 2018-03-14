@@ -56,12 +56,40 @@ router.get('/article', (ctx, next) => __awaiter(this, void 0, void 0, function* 
     ctx.body = data;
 }));
 router.get('/visited', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
+    const { results, page = 1 } = ctx.query;
     const query = (err, db) => __awaiter(this, void 0, void 0, function* () {
         if (err) {
             return '错误';
         }
-        let r = yield db.collection('visited').find().toArray();
-        return r;
+        let count = yield db.collection('visited').count();
+        let r = yield db.collection('visited').find()
+            .sort({ create_date: -1 })
+            .skip((page - 1) * results)
+            .limit(parseInt(results))
+            .toArray();
+        return {
+            data: r,
+            totalCount: count
+        };
+    });
+    ctx.body = yield db_1.default(query);
+}));
+router.get('/ips', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
+    const { results, page = 1 } = ctx.query;
+    const query = (err, db) => __awaiter(this, void 0, void 0, function* () {
+        if (err) {
+            return '错误';
+        }
+        let count = yield db.collection('ips').count();
+        let r = yield db.collection('ips').find()
+            .sort({ create_date: -1 })
+            .skip((page - 1) * results)
+            .limit(parseInt(results))
+            .toArray();
+        return {
+            data: r,
+            totalCount: count
+        };
     });
     ctx.body = yield db_1.default(query);
 }));

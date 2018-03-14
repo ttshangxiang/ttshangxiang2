@@ -1,0 +1,130 @@
+
+
+.j-editor {
+    * {
+        box-sizing: border-box;
+    }
+
+    .file {
+        position: fixed;
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+    }
+
+    .file-header {
+        padding: 5px 10px;
+        background-color: #fafbfc;
+        border-bottom: 1px solid #e1e4e8;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+    }
+
+    .file-actions {
+        float: right;
+        padding-top: 2px;
+        font-size: 13px;
+    }
+    
+    .file-actions select {
+        margin-left: 5px;
+        height: 28px;
+        min-height: 28px;
+        padding: 3px 24px 2px 8px;
+        font-size: 12px;
+
+        display: inline-block;
+        max-width: 100%;
+        background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAUCAMAAACzvE1FAAAADFBMVEUzMzMzMzMzMzMzMzMKAG/3AAAAA3RSTlMAf4C/aSLHAAAAPElEQVR42q3NMQ4AIAgEQTn//2cLdRKppSGzBYwzVXvznNWs8C58CiussPJj8h6NwgorrKRdTvuV9v16Afn0AYFOB7aYAAAAAElFTkSuQmCC) no-repeat right 8px center;
+        background-size: 8px 10px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+        line-height: 20px;
+        color: #24292e;
+        vertical-align: middle;
+        border: 1px solid #d1d5da;
+        border-radius: 3px;
+        outline: none;
+        box-shadow: inset 0 1px 2px rgba(27,31,35,0.075);
+    }
+
+    .tabnav-tabs {
+        margin: -6px 0 -6px -11px;
+    }
+
+    .tabnav-tabs button {
+        display: inline-block;
+        padding: 8px 12px;
+        font-size: 14px;
+        line-height: 20px;
+        color: #586069;
+        text-decoration: none;
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-bottom: 0;
+        white-space: nowrap;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        outline: none;
+    }
+
+    .tabnav-tabs button.selected {
+        color: #24292e;
+        background-color: #fff;
+        border-color: #d1d5da;
+        padding: 12px 15px;
+        border-radius: 0;
+        font-weight: 600;
+    }
+
+    .tabnav-tabs button.selected:first-child {
+        border-top-left-radius: 3px;
+    }
+
+    .tabnav-tabs svg {
+        vertical-align: text-bottom;
+        display: inline-block;
+        fill: currentColor;
+    }
+    
+    .CodeMirror {
+        height: 718px;
+    }
+
+    .CodeMirror-gutters {
+        background: #fff;
+        border-right-width: 0;
+    }
+    .CodeMirror-lines {
+        cursor: text;
+    }
+    .CodeMirror-linenumber {
+        color: #959da5;
+        padding: 0 16px 0 16px;
+    }
+
+    .tabpanel {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 44px;
+        overflow: auto;
+    }
+
+    .j-textarea {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+}

@@ -50,12 +50,41 @@ router.get('/article', async (ctx, next) => {
 });
 
 router.get('/visited', async (ctx, next) => {
+    const { results, page = 1 } = ctx.query;
     const query = async (err, db) => {
         if (err) {
             return '错误';
         }
-        let r = await db.collection('visited').find().toArray();
-        return r;
+        let count = await db.collection('visited').count();
+        let r = await db.collection('visited').find()
+                        .sort({create_date: -1})
+                        .skip((page - 1) * results)
+                        .limit(parseInt(results))
+                        .toArray();
+        return {
+            data: r,
+            totalCount: count
+        };
+    }
+    ctx.body = await DB(query);
+});
+
+router.get('/ips', async (ctx, next) => {
+    const { results, page = 1 } = ctx.query;
+    const query = async (err, db) => {
+        if (err) {
+            return '错误';
+        }
+        let count = await db.collection('ips').count();
+        let r = await db.collection('ips').find()
+                        .sort({create_date: -1})
+                        .skip((page - 1) * results)
+                        .limit(parseInt(results))
+                        .toArray();
+        return {
+            data: r,
+            totalCount: count
+        };
     }
     ctx.body = await DB(query);
 });

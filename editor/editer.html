@@ -123,14 +123,14 @@
     <div class="file">
         <div class="file-header">
             <div class="file-actions">
-                <select class="form-select select-sm js-code-indent-mode">
+                <select class="form-select select-sm js-code-indent-mode" id="select1">
                     <optgroup label="Indent mode">
                         <option value="space" selected="selected">Spaces</option>
                         <option value="tab">Tabs</option>
                     </optgroup>
                 </select>
 
-                <select class="form-select select-sm js-code-indent-width">
+                <select class="form-select select-sm js-code-indent-width" id="select2">
                     <optgroup label="Indent size">
                         <option value="2">2</option>
                         <option value="4" selected="selected">4</option>
@@ -138,7 +138,7 @@
                     </optgroup>
                 </select>
 
-                <select class="form-select select-sm js-code-wrap-mode">
+                <select class="form-select select-sm js-code-wrap-mode" id="select3">
                     <optgroup label="Line wrap mode">
                         <option value="off">No wrap</option>
                         <option value="on" selected="selected">Soft wrap</option>
@@ -146,13 +146,13 @@
                 </select>
             </div>
             <nav class="tabnav-tabs">
-                <button type="button" class="btn-link code selected tabnav-tab js-blob-edit-code">
+                <button type="button" class="btn-link code selected tabnav-tab js-blob-edit-code" id="editor-btn">
                     <svg aria-hidden="true" class="octicon octicon-code" height="16" version="1.1" viewBox="0 0 14 16" width="14">
                         <path fill-rule="evenodd" d="M9.5 3L8 4.5 11.5 8 8 11.5 9.5 13 14 8 9.5 3zm-5 0L0 8l4.5 5L6 11.5 2.5 8 6 4.5 4.5 3z"></path>
                     </svg>
                     Edit file
                 </button>
-                <button type="button" class="btn-link preview tabnav-tab js-blob-edit-preview">
+                <button type="button" class="btn-link preview tabnav-tab js-blob-edit-preview" id="preview-btn">
                     <svg aria-hidden="true" class="octicon octicon-eye" height="16" version="1.1" viewBox="0 0 16 16" width="16">
                         <path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"></path>
                     </svg>
@@ -160,13 +160,35 @@
                 </button>
             </nav>
         </div>
-        <textarea name="heh" id="textarea" rows="35"></textarea>
+        <div class="tabpanel" id="tabpanel1">
+            <textarea name="heh" id="textarea" rows="35"></textarea>
+        </div>
+        <div class="tabpanel" id="tabpanel2">
+            <div id="preview"></div>
+        </div>
     </div>
     <script type="text/javascript" src="./codemirror.js"></script>
     <script>
         var myTextarea = document.getElementById('textarea');
-        var editor = CodeMirror.fromTextArea(myTextarea, {
-            lineNumbers: true
+        var options = {
+            lineNumbers: true,
+            indentUnit: 4,
+            indentWithTabs: false
+        };
+        var editor = CodeMirror.fromTextArea(myTextarea, options);
+        document.getElementById('select1').addEventListener('change', function () {
+            editor.setOption('indentWithTabs', this.value == 'tab');
+        });
+        document.getElementById('select2').addEventListener('change', function () {
+            editor.setOption('indentUnit', parseInt(this.value));
+        });
+        document.getElementById('editor-btn').addEventListener('click', function () {
+            document.getElementById('tabpanel1').style.display = 'block';
+            document.getElementById('tabpanel2').style.display = 'none';
+        });
+        document.getElementById('preview-btn').addEventListener('click', function () {
+            document.getElementById('tabpanel2').style.display = 'block';
+            document.getElementById('tabpanel1').style.display = 'none';
         });
     </script>
 </body>

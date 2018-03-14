@@ -8,10 +8,7 @@ import { MyRoute}  from './MyRoute';
 import { Article } from './Article';
 import { My } from './My';
 import { Admin } from './Admin';
-import { Avisited } from './Admin/Avisited';
-import { Aarticle } from './Admin/Aarticle';
-import { Avideo } from './Admin/Avideo';
-import { Amusic } from './Admin/Amusic';
+import { Editor } from './Editor';
 import 'whatwg-fetch';
 
 export interface AppProps {}
@@ -32,11 +29,8 @@ export default class App extends React.Component<AppProps, {}> {
                     <MyRoute path='/hello' component={Hello} />
                     <MyRoute path='/xqj' component={Xqj} />
                     <Route path='/article' component={Article}/>
-                    <Route exact path='/admin' component={Admin}/>
-                    <Route path='/admin/visited' component={Avisited}/>
-                    <Route path='/admin/article' component={Aarticle}/>
-                    <Route path='/admin/video' component={Avideo}/>
-                    <Route path='/admin/music' component={Amusic}/>
+                    <Route path='/admin' component={Admin}/>
+                    <Route path='/editor' component={Editor} />
                 </div>
             </Router>
         );

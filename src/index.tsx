@@ -1,6 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
 
 import './styles/base.less';
 
