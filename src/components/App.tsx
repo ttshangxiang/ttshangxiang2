@@ -7,7 +7,7 @@ import { List } from './List';
 import { MyRoute}  from './MyRoute';
 import { Article } from './Article';
 import { My } from './My';
-import { Admin } from './Admin';
+// import { Admin } from './Admin';
 import { Editor } from './Editor';
 import 'whatwg-fetch';
 
@@ -29,7 +29,7 @@ export default class App extends React.Component<AppProps, {}> {
                     <MyRoute path='/hello' component={Hello} />
                     <MyRoute path='/xqj' component={Xqj} />
                     <Route path='/article' component={Article}/>
-                    <Route path='/admin' component={Admin}/>
+                    {/* <Route path='/admin' component={Admin}/> */}
                     <Route path='/editor' component={Editor} />
                 </div>
             </Router>

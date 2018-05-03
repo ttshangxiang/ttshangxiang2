@@ -1,6 +1,8 @@
-let HtmlWebpackPlugin = require('html-webpack-plugin');
-let webpack = require('webpack');
-let path = require('path');
+const webpack = require('webpack');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 
 const base = {
   entry: ['./src/index.tsx'],
@@ -65,8 +67,8 @@ const base = {
       template: './src/index.html',
       filename: 'index.html'
     }),
-    new webpack.NamedModulesPlugin()
-    
+    new webpack.NamedModulesPlugin(),
+    new ProgressBarPlugin(),
   ]
 }
 
@@ -79,6 +81,10 @@ if (process.env.NODE_ENV == 'production') {
     },
     devtool: false,
     plugins: base.plugins.concat([
+      new CleanWebpackPlugin([path.resolve(__dirname, './dist')], {
+        allowExternal: true,
+        exclude: ['.git']
+      }),
       new webpack.optimize.UglifyJsPlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.AggressiveMergingPlugin(),
