@@ -1,39 +1,22 @@
-import * as React from "react";
+import * as React from "react"
+import './index.less'
 
-interface ArticleProps {
-    location: any
-}
+export class Article extends React.Component<{}, {}> {
+  constructor(props: any) {
+    super(props)
+  }
 
-interface ArticleState {
-    text: string
-}
-export class Article extends React.Component<ArticleProps, ArticleState> {
-    constructor (props:any) {
-        super(props);
-        this.state = {
-            text: ''
-        }
-    }
-
-    componentDidMount () {
-        fetch('/api/article/' + this.props.location.search.substr(4))
-        .then(response => response.json())
-        .then(json => {
-            if (json.code == 0) {
-                this.setState({text: json.data.content});
-            }
-        })
-    }
-
-    render() {
-        let text = this.state.text;
-    return <pre style={{
-        'word-wrap': 'break-word',
-        'white-space': 'pre-wrap',
-        'padding': '12px',
-        'maxWidth': '800px',
-        'margin': '0 auto',
-        'line-height': '26px'
-    }} dangerouslySetInnerHTML={{__html: text}}></pre>;
-    }
+  render() {
+    return (
+      <div className="card article-content">
+        <div className="card-content">
+          <span className="card-title">标题</span>
+          <p className="date-text">2018-12-12</p>
+          <p>
+            <span className="chip">标签</span>
+          </p>
+        </div>
+      </div>
+    )
+  }
 }

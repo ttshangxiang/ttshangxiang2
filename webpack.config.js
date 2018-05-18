@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const base = {
   entry: ['./src/index.tsx'],
@@ -20,6 +21,9 @@ const base = {
     alias: {  
       src: path.resolve(__dirname, './src')  
     }
+  },
+  externals: {
+    jquery: 'window.$'
   },
 
   module: {
@@ -49,14 +53,20 @@ const base = {
 
       // images
       {
-        test: /\.(?:svg|png|jpg)$/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            limit: 8192,
-            name: './imgs/[hash:8].[name].[ext]'
-          }
-        }]
+        test: /\.(?:png|jpe?g|gif|ico)$/,
+        loader: 'url-loader',
+        query: {
+          limit: 8192,
+          name: 'images/[name].[hash:8].[ext]'
+        }
+      },
+      {
+        test: /\.(?:woff2?|eot|ttf|otf|svg)$/,
+        loader: 'url-loader',
+        query: {
+          limit: 8192,
+          name: 'fonts/[name].[hash:8].[ext]'
+        }
       }
     ]
   },
@@ -69,6 +79,20 @@ const base = {
     }),
     new webpack.NamedModulesPlugin(),
     new ProgressBarPlugin(),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, './node_modules/materialize-css/dist'),
+        to: path.resolve(__dirname, './dist/materialize'),
+        ignore: ['.*']
+      }
+    ]),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, './node_modules/jquery/dist/jquery.min.js'),
+        to: path.resolve(__dirname, './dist/materialize/js'),
+        ignore: ['.*']
+      }
+    ])
   ]
 }
 

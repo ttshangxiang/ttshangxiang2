@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { Route, Redirect, BrowserRouter as Router } from 'react-router-dom';
-import { Home } from './Home';
-import { Hello } from './Hello';
-import { Xqj } from './Xqj';
+// import { Home } from './Home';
+// import { Hello } from './Hello';
+// import { Xqj } from './Xqj';
 import { List } from './List';
-import { MyRoute}  from './MyRoute';
-import { Article } from './Article';
-import { My } from './My';
-// import { Admin } from './Admin';
-import { Editor } from './Editor';
-import 'whatwg-fetch';
+// import { MyRoute}  from './MyRoute';
+// import { Article } from './Article';
+// import { My } from './My';
+// import { Editor } from './Editor';
+import { Material } from './Material'
 
 export interface AppProps {}
 
@@ -17,21 +16,18 @@ export default class App extends React.Component<AppProps, {}> {
     render() {
         return (
             <Router>
-                <div>
-                    <MyRoute exact path='/' component={Home} />
-                    <MyRoute path='/i' component={I} />
-                    <MyRoute path='/my' component={My} />
-                    <MyRoute path='/like' component={Like} />
-                    <MyRoute path='/hate' component={Hate} />
-                    <MyRoute path='/think' component={Think} />
-                    <MyRoute path='/daily' component={Daily} />
-                    <MyRoute path='/about' component={About} />
-                    <MyRoute path='/hello' component={Hello} />
-                    <MyRoute path='/xqj' component={Xqj} />
-                    <Route path='/article' component={Article}/>
-                    {/* <Route path='/admin' component={Admin}/> */}
-                    <Route path='/editor' component={Editor} />
-                </div>
+                <Route exact path='/' component={Material} />
+                {/* <MyRoute path='/i' component={I} />
+                <MyRoute path='/my' component={My} />
+                <MyRoute path='/like' component={Like} />
+                <MyRoute path='/hate' component={Hate} />
+                <MyRoute path='/think' component={Think} />
+                <MyRoute path='/daily' component={Daily} />
+                <MyRoute path='/about' component={About} />
+                <MyRoute path='/hello' component={Hello} />
+                <MyRoute path='/xqj' component={Xqj} />
+                <Route path='/article' component={Article}/>
+                <Route path='/editor' component={Editor} /> */}
             </Router>
         );
     }
