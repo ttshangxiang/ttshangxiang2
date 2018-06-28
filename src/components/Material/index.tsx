@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Layout } from '../Layout';
-import { Card } from '../Card';
+import { Card } from '../Card/card2';
 import { ArticleList } from '../ArticleList'
 import { Pager } from '../Pager'
 import { Article } from '../Article'
@@ -60,6 +60,10 @@ export class Material extends React.Component <{}, {}> {
           <div className="col s12">
             <Article/>
           </div>
+          {/* <div className="col s12 m6 l4">
+            <Card color="style1"/>
+          </div> */}
+          
         </div>
       </Layout>
     );

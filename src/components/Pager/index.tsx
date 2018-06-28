@@ -5,7 +5,7 @@ interface props {
   total: number,
   page: number
   size: number,
-  baseurl: string
+  change: Function
 }
 
 export class Pager extends React.Component<props, {}> {
@@ -14,7 +14,7 @@ export class Pager extends React.Component<props, {}> {
     }
 
     newDom () {
-      const { total, size, page, baseurl } = this.props;
+      const { total, size, page, change } = this.props;
       const pageNum = Math.ceil(total / size) || 0;
       const index = page + 1;
       let cindex = index;
@@ -46,38 +46,30 @@ export class Pager extends React.Component<props, {}> {
           arr.push(-1, pageNum);
       }
       let dom = [];
-      const blank = 'javascript:;'
-
-      let prev_class = 'waves-effect'
-      let prev_href = baseurl + (page - 1)
       if (index == 1) {
-        prev_class = 'disabled'
-        prev_href = blank
+        dom.push(<li key="prev"><span>«</span></li>)
+      } else {
+        dom.push(<li key="prev"><a className="waves-effect waves-light" onClick={() => change(page - 1)}>«</a></li>)
       }
-      dom.push(<li className={prev_class}><a href={prev_href}><i className="material-icons">chevron_left</i></a></li>)
 
       for (let i = 0; i < arr.length; i++) {
         const item = arr[i]
         if (item == -1) {
-          dom.push(<li><span>...</span></li>)
+          dom.push(<li key={i}><span>...</span></li>)
         } else {
-          let active_class = 'waves-effect'
-          let active_href = baseurl + (item - 1)
           if (index == item) {
-            active_class = 'active'
-            active_href = blank
+            dom.push(<li key={i}><span>{item}</span></li>)
+          } else {
+            dom.push(<li key={i}><a className="waves-effect waves-light" onClick={() => change(item - 1)}>{item}</a></li>)
           }
-          dom.push(<li className={active_class}><a href={active_href}>{item}</a></li>)
         }
       }
 
-      let next_class = 'waves-effect'
-      let next_href = baseurl + (page + 1)
       if (index == pageNum) {
-        next_class = 'disabled'
-        next_href = blank
+        dom.push(<li key="next"><span>»</span></li>)
+      } else {
+        dom.push(<li key="next"><a className="waves-effect waves-light" onClick={() => change(page + 1)}>»</a></li>)
       }
-      dom.push(<li className={next_class}><a href={next_href}><i className="material-icons">chevron_right</i></a></li>)
 
       return dom
     }

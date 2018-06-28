@@ -1,11 +1,25 @@
 import * as React from 'react';
-import 'whatwg-fetch';
 import './index.less';
+import { Pager } from '../Pager';
+
+interface XqjItem {
+    _id: string,
+    id: number,
+    user_id: number,
+    info: string,
+    parent_id: number,
+    time: string,
+    user_name: string
+}
 
 interface XqjState {
-    list: Array<any>,
     show: number,
-    showErr: string
+    showErr: string,
+    words: Array<XqjItem>,
+    comments: Array<XqjItem>
+    page: number,
+    count: number,
+    total: number
 };
 
 const jhq = require('./jhq.png');
@@ -15,17 +29,28 @@ export class Xqj extends React.Component<{}, XqjState> {
     constructor (props:any) {
         super(props);
         this.state = {
-            list: [],
             show: 0,
-            showErr: ''
+            showErr: '',
+            words: [],
+            comments: [],
+            page: 0,
+            count: 7,
+            total: 0
         }
+        this.load = this.load.bind(this)
     }
 
     componentDidMount () {
-        fetch('/api/xiaoqingjiao')
+        this.load(0);
+    }
+
+    load (page:number) {
+        const {count} = this.state;
+        const offset = page * count;
+        fetch(`/api/xiaoqingjiao?offset=${offset}&count=${count}`)
         .then(response => response.json())
         .then(json => {
-            this.setState({list: json});
+            this.setState({...json, page});
         })
     }
 
@@ -46,8 +71,9 @@ export class Xqj extends React.Component<{}, XqjState> {
     }
 
     renderList() {
+        const {words, comments, page, total, count} = this.state;
         let obj :any = {};
-        this.state.list.forEach(item => {
+        comments.forEach(item => {
             if (item.parent_id != 0) {
                 if (obj[item.parent_id]) {
                     obj[item.parent_id].push(item);
@@ -56,8 +82,8 @@ export class Xqj extends React.Component<{}, XqjState> {
                 }
             }
         });
-        let list :any = [];
-        this.state.list.forEach((item, index) => {
+        let list: Array<JSX.Element> = [];
+        words.forEach((item, index) => {
             if (item.parent_id == 0) {
                 let dom :any = [];
                 if (obj[item.id]) {
@@ -79,6 +105,7 @@ export class Xqj extends React.Component<{}, XqjState> {
                 <div className="xqj-content">
                     <div className="xqj-list">{list}</div>
                 </div>
+                <Pager page={page} size={count} total={total} change={this.load}/>
             </div>
         );
     }
@@ -87,7 +114,7 @@ export class Xqj extends React.Component<{}, XqjState> {
         return (
             <div className="xqj-lock">
                 <div className="xqj-lock-form">
-                    <input type="text" className="xqj-lock-input" placeholder="输入QQ号试试" ref="input"/>
+                    <input type="text" className="xqj-lock-input browser-default" placeholder="输入QQ号试试" ref="input"/>
                     <a href="javascript:;" className="xqj-lock-btn" onClick={() => this.unlock()}></a>
                     <div className="xqj-lock-tips">{this.state.showErr}</div>
                 </div>

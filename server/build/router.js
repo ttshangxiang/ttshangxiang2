@@ -94,12 +94,32 @@ router.get('/ips', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
     ctx.body = yield db_1.default(query);
 }));
 router.get('/xiaoqingjiao', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
+    const offset = parseInt(ctx.query.offset) || 0;
+    const count = parseInt(ctx.query.count) || 10;
     const query = (err, db) => __awaiter(this, void 0, void 0, function* () {
         if (err) {
             return '错误';
         }
-        let r = yield db.collection('xiaoqingjiao').find().toArray();
-        return r;
+        // 内容
+        const words = yield db.collection('xiaoqingjiao')
+            .find({ parent_id: { $in: [0, -1] } })
+            .sort({ id: -1 })
+            .limit(count)
+            .skip(offset)
+            .toArray();
+        // 总数
+        const total = yield db.collection('xiaoqingjiao')
+            .find({ parent_id: { $in: [0, -1] } })
+            .count();
+        // 评论
+        let ids = [];
+        words.forEach(item => {
+            ids.push(item.id);
+        });
+        const comments = yield db.collection('xiaoqingjiao')
+            .find({ parent_id: { $in: ids } })
+            .toArray();
+        return { words, total, comments };
     });
     ctx.body = yield db_1.default(query);
 }));

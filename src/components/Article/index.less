@@ -1,4 +1,4 @@
-.article-content {
+.article-card {
   .date-text {
     color: #999;
     font-size: 14px;
@@ -8,5 +8,35 @@
     height: 24px;
     line-height: 24px;
     font-size: 12px;
+  }
+}
+.article-content {
+  padding: 20px 0;
+}
+.card .card-action.article-comment {
+  background: #eee;
+  border-top: none;
+
+  .collection {
+    border: none;
+  }
+  .collection-item {
+    background: transparent;
+  }
+}
+
+p.comment-bottom > * {
+  color: #999;
+  font-size: 14px;
+  margin-right: 12px;
+  vertical-align: middle;
+
+  &.span-icon > * {
+    vertical-align: middle;
+  }
+
+  .material-icons {
+    font-size: 14px;
+    margin-right: 4px;
   }
 }

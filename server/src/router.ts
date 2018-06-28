@@ -90,12 +90,32 @@ router.get('/ips', async (ctx, next) => {
 });
 
 router.get('/xiaoqingjiao', async (ctx, next) => {
+    const offset = parseInt(ctx.query.offset) || 0;
+    const count = parseInt(ctx.query.count) || 10;
     const query = async (err, db) => {
         if (err) {
             return '错误';
         }
-        let r = await db.collection('xiaoqingjiao').find().toArray();
-        return r;
+        // 内容
+        const words = await db.collection('xiaoqingjiao')
+            .find({parent_id: {$in: [0, -1]}})
+            .sort({id: -1})
+            .limit(count)
+            .skip(offset)
+            .toArray();
+        // 总数
+        const total = await db.collection('xiaoqingjiao')
+            .find({parent_id: {$in: [0, -1]}})
+            .count();
+        // 评论
+        let ids = [];
+        words.forEach(item => {
+            ids.push(item.id);
+        });
+        const comments = await db.collection('xiaoqingjiao')
+            .find({parent_id: {$in: ids}})
+            .toArray();
+        return {words, total, comments};
     }
     ctx.body = await DB(query);
 });

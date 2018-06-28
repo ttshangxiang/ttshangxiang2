@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Route, Redirect, BrowserRouter as Router } from 'react-router-dom';
 // import { Home } from './Home';
 // import { Hello } from './Hello';
-// import { Xqj } from './Xqj';
+import { Xqj } from './Xqj';
 import { List } from './List';
 // import { MyRoute}  from './MyRoute';
 // import { Article } from './Article';
@@ -17,6 +17,7 @@ export default class App extends React.Component<AppProps, {}> {
         return (
             <Router>
                 <Route exact path='/' component={Material} />
+                <Route path='/xqj' component={Xqj} />
                 {/* <MyRoute path='/i' component={I} />
                 <MyRoute path='/my' component={My} />
                 <MyRoute path='/like' component={Like} />
@@ -25,7 +26,6 @@ export default class App extends React.Component<AppProps, {}> {
                 <MyRoute path='/daily' component={Daily} />
                 <MyRoute path='/about' component={About} />
                 <MyRoute path='/hello' component={Hello} />
-                <MyRoute path='/xqj' component={Xqj} />
                 <Route path='/article' component={Article}/>
                 <Route path='/editor' component={Editor} /> */}
             </Router>
