@@ -16,18 +16,20 @@ export default class App extends React.Component<AppProps, {}> {
     render() {
         return (
             <Router>
-                <Route exact path='/' component={Material} />
-                <Route path='/xqj' component={Xqj} />
-                {/* <MyRoute path='/i' component={I} />
-                <MyRoute path='/my' component={My} />
-                <MyRoute path='/like' component={Like} />
-                <MyRoute path='/hate' component={Hate} />
-                <MyRoute path='/think' component={Think} />
-                <MyRoute path='/daily' component={Daily} />
-                <MyRoute path='/about' component={About} />
-                <MyRoute path='/hello' component={Hello} />
-                <Route path='/article' component={Article}/>
-                <Route path='/editor' component={Editor} /> */}
+                <div>
+                    <Route exact path='/' component={Material} />
+                    <Route path='/xqj' component={Xqj} />
+                    {/* <MyRoute path='/i' component={I} />
+                    <MyRoute path='/my' component={My} />
+                    <MyRoute path='/like' component={Like} />
+                    <MyRoute path='/hate' component={Hate} />
+                    <MyRoute path='/think' component={Think} />
+                    <MyRoute path='/daily' component={Daily} />
+                    <MyRoute path='/about' component={About} />
+                    <MyRoute path='/hello' component={Hello} />
+                    <Route path='/article' component={Article}/>
+                    <Route path='/editor' component={Editor} /> */}
+                </div>
             </Router>
         );
     }
