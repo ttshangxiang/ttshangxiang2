@@ -85,7 +85,7 @@ export class Xqj extends React.Component<{}, XqjState> {
         let list: Array<JSX.Element> = [];
         words.forEach((item, index) => {
             if (item.parent_id == 0) {
-                let dom :any = [];
+                let dom :Array<JSX.Element> = [];
                 if (obj[item.id]) {
                     obj[item.id].forEach((i:any, _index:number) => {
                         dom.push(<XqjItem item={i} key={_index}/>);

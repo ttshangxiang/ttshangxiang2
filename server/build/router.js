@@ -13,9 +13,13 @@ const db_1 = require("./db");
 const moment = require("moment");
 const request = require("request");
 const mongodb_1 = require("mongodb");
+const neteast_1 = require("./neteast");
 const router = new Router({
     prefix: '/api'
 });
+// 网易云接口
+router.use(neteast_1.default.routes());
+router.use(neteast_1.default.allowedMethods());
 router.get('/article/:id', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
     const query = (err, db) => __awaiter(this, void 0, void 0, function* () {
         if (err) {

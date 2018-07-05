@@ -3,10 +3,15 @@ import DB from './db';
 import * as moment from 'moment';
 import * as request from 'request';
 import { ObjectId } from 'mongodb';
+import neteast from './neteast';
 
 const router = new Router({
     prefix: '/api'
 });
+
+// 网易云接口
+router.use(neteast.routes());
+router.use(neteast.allowedMethods());
 
 router.get('/article/:id', async (ctx, next) => {
     const query = async (err, db) => {
