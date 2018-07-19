@@ -57,12 +57,12 @@ export class Material extends React.Component <{}, {}> {
             <ArticleList list={list}/>
             <Pager total={100} page={0} size={10} baseurl="/"/>
           </div> */}
-          {/* <div className="col s12">
+          <div className="col s12">
             <Article/>
-          </div> */}
-          <div className="col s12 m6 l4">
-            <Card color="style1"/>
           </div>
+          {/* <div className="col s12 m6 l4">
+            <Card color="style1"/>
+          </div> */}
           
         </div>
       </Layout>

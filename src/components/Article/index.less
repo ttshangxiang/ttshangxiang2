@@ -16,27 +16,37 @@
 .card .card-action.article-comment {
   background: #eee;
   border-top: none;
+  padding: 16px 12px;
 
   .collection {
     border: none;
   }
   .collection-item {
     background: transparent;
+    padding-left: 12px;
   }
-}
-
-p.comment-bottom > * {
-  color: #999;
-  font-size: 14px;
-  margin-right: 12px;
-  vertical-align: middle;
-
-  &.span-icon > * {
-    vertical-align: middle;
+  .nickname {
+    padding-left: 60px;
   }
-
-  .material-icons {
+  .comment-info {
+    padding-left: 60px;
+  }
+  .comment-info > * {
+    color: #999;
     font-size: 14px;
-    margin-right: 4px;
+    margin-right: 12px;
+    vertical-align: middle;
+  
+    &.span-icon > * {
+      vertical-align: middle;
+    }
+  
+    .material-icons {
+      font-size: 14px;
+      margin-right: 4px;
+    }
+  }
+  .comment-content {
+    padding: 12px 0;
   }
 }
