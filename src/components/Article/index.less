@@ -1,3 +1,11 @@
+
+textarea.materialize-textarea {
+  min-height: 0;
+  height: 21px;
+  padding-bottom: 1rem;
+  padding-top: 0.5rem;
+}
+
 .article-card {
   .date-text {
     color: #999;
@@ -16,24 +24,33 @@
 .card .card-action.article-comment {
   background: #eee;
   border-top: none;
-  padding: 16px 12px;
+  padding: 16px 24px;
 
   .collection {
     border: none;
   }
   .collection-item {
     background: transparent;
-    padding-left: 12px;
+    padding-left: 0px;
+    padding-right: 0px;
+    border: none;
+    &.avatar > .circle {
+      left: 0;
+    }
   }
   .nickname {
-    padding-left: 60px;
+    padding-left: 48px;
+    color: #666;
+    .sub-comment-content {
+      color: #333;
+    }
   }
   .comment-info {
-    padding-left: 60px;
+    padding-left: 48px;
   }
   .comment-info > * {
     color: #999;
-    font-size: 14px;
+    font-size: 13px;
     margin-right: 12px;
     vertical-align: middle;
   
@@ -48,5 +65,30 @@
   }
   .comment-content {
     padding: 12px 0;
+  }
+
+  .sub-comment {
+    margin: 0;
+    padding: 0 0 0 12px;
+
+    .collection-item.avatar {
+      padding: 0;
+      min-height: 48px;
+      .circle {
+        width: 32px;
+        height: 32px;
+        top: 4px;
+      }
+      .nickname, .comment-info {
+        padding-left: 38px;
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .card .card-action.article-comment {
+    padding: 16px 12px;
   }
 }
