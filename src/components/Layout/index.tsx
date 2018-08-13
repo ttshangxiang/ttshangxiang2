@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import './index.less';
+import { Login } from '../Login';
 
 export class Layout extends React.Component <{}, {side: Boolean, sideAnimate: Boolean}> {
   constructor(props: any) {
@@ -35,6 +36,7 @@ export class Layout extends React.Component <{}, {side: Boolean, sideAnimate: Bo
     const { side, sideAnimate } = this.state;
     return (
       <div className={'jhq-layout ' + (side ? 'slider-nav-show ' : '') + (sideAnimate ? 'slider-nav-animate ' : '')}>
+        <Login/>
         <nav className="jhq-nav">
           <div className="nav-wrapper">
             <a className="btn-floating btn-large z-depth-0 transparent waves-effect"
@@ -60,15 +62,20 @@ export class Layout extends React.Component <{}, {side: Boolean, sideAnimate: Bo
               </a>
             </div>
             <div className="collection jhq-collection">
-              <a href="javascript:;" className="collection-item waves-effect"><i className="material-icons">assignment</i><span>语文垃圾</span></a>
-              <a href="javascript:;" className="collection-item waves-effect"><i className="material-icons">assignment</i><span>数学</span></a>
-              <a href="javascript:;" className="collection-item waves-effect"><i className="material-icons">assignment</i><span>英语73分</span></a>
+              <a href="javascript:;" className="collection-item waves-effect"><i className="material-icons">assignment</i><span>说说</span></a>
+              <a href="javascript:;" className="collection-item waves-effect"><i className="material-icons">assignment</i><span>日志</span></a>
             </div>
             <div className="collection jhq-collection">
-              <div className="collection-item">兴趣</div>
+              <div className="collection-item">生涯</div>
+              <a href="javascript:;" className="collection-item waves-effect"><i className="material-icons">assignment</i><span>照片</span></a>
               <a href="javascript:;" className="collection-item waves-effect"><i className="material-icons">assignment</i><span>游戏</span></a>
               <a href="javascript:;" className="collection-item waves-effect"><i className="material-icons">assignment</i><span>音乐</span></a>
               <a href="javascript:;" className="collection-item waves-effect"><i className="material-icons">assignment</i><span>影视</span></a>
+            </div>
+            <div className="collection jhq-collection">
+              <div className="collection-item">更多</div>
+              <a href="javascript:;" className="collection-item waves-effect"><i className="material-icons">assignment</i><span>留言</span></a>
+              <a href="javascript:;" className="collection-item waves-effect"><i className="material-icons">assignment</i><span>关于</span></a>
             </div>
           </div>
         </div>

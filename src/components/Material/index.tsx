@@ -4,6 +4,7 @@ import { Card } from '../Card/card2';
 import { ArticleList } from '../ArticleList'
 import { Pager } from '../Pager'
 import { Article } from '../Article'
+import { Player } from '../Music/player'
 import './index.less';
 
 export class Material extends React.Component <{}, {}> {
@@ -63,7 +64,7 @@ export class Material extends React.Component <{}, {}> {
           {/* <div className="col s12 m6 l4">
             <Card color="style1"/>
           </div> */}
-          
+            <Player/>
         </div>
       </Layout>
     );
