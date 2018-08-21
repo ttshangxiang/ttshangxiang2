@@ -1,8 +1,8 @@
-import * as Router from "koa-router"
-import DB from "./db"
+import * as Router from 'koa-router'
+import DB from './db'
 import { ObjectId } from 'mongodb';
 const router = new Router({
-  prefix: "/comment"
+  prefix: '/comment'
 });
 
 interface Comment {
@@ -18,7 +18,7 @@ interface Comment {
 }
 
 // 获取某个项目的评论
-router.get("/:id", async (ctx, next) => {
+router.get('/:id', async (ctx, next) => {
   const offset = parseInt(ctx.query.offset) || 0;
   const count = parseInt(ctx.query.count) || 10;
   const fid = ObjectId(ctx.params.id);
@@ -28,18 +28,18 @@ router.get("/:id", async (ctx, next) => {
     }
     // 评论
     const data: Array<Comment> = await db
-      .collection("comments")
+      .collection('comments')
       .aggregate([
         {$match: { fid: fid, pid: { $exists: false }, status: {$gte: 0}}},
         {$sort: {ctime: -1}},
         {$limit: count},
         {$skip: offset},
-        {$lookup: { from: "users", localField: "uid", foreignField: "_id", as: "user" }}
+        {$lookup: { from: 'users', localField: 'uid', foreignField: '_id', as: 'user' }}
       ])
       .toArray()
     // 总数
     const total = await db
-      .collection("comments")
+      .collection('comments')
       .find({ fid: fid, pid: { $exists: false }, status: {$gte: 0} })
       .count();
     // 评论
@@ -52,8 +52,8 @@ router.get("/:id", async (ctx, next) => {
       .aggregate([
         {$match: { fid: fid, pid: { $in: ids }, status: {$gte: 0} }},
         {$sort: {ctime: -1}},
-        {$lookup: { from: "users", localField: "uid", foreignField: "_id", as: "user" }},
-        {$lookup: { from: "users", localField: "touid", foreignField: "_id", as: "touser" }}
+        {$lookup: { from: 'users', localField: 'uid', foreignField: '_id', as: 'user' }},
+        {$lookup: { from: 'users', localField: 'touid', foreignField: '_id', as: 'touser' }}
       ])
       .toArray();
     return { data, sub, total };

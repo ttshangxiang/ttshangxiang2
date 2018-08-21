@@ -12,10 +12,10 @@ const Router = require("koa-router");
 const db_1 = require("./db");
 const mongodb_1 = require("mongodb");
 const router = new Router({
-    prefix: "/comment"
+    prefix: '/comment'
 });
 // 获取某个项目的评论
-router.get("/:id", (ctx, next) => __awaiter(this, void 0, void 0, function* () {
+router.get('/:id', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
     const offset = parseInt(ctx.query.offset) || 0;
     const count = parseInt(ctx.query.count) || 10;
     const fid = mongodb_1.ObjectId(ctx.params.id);
@@ -25,18 +25,18 @@ router.get("/:id", (ctx, next) => __awaiter(this, void 0, void 0, function* () {
         }
         // 评论
         const data = yield db
-            .collection("comments")
+            .collection('comments')
             .aggregate([
             { $match: { fid: fid, pid: { $exists: false }, status: { $gte: 0 } } },
             { $sort: { ctime: -1 } },
             { $limit: count },
             { $skip: offset },
-            { $lookup: { from: "users", localField: "uid", foreignField: "_id", as: "user" } }
+            { $lookup: { from: 'users', localField: 'uid', foreignField: '_id', as: 'user' } }
         ])
             .toArray();
         // 总数
         const total = yield db
-            .collection("comments")
+            .collection('comments')
             .find({ fid: fid, pid: { $exists: false }, status: { $gte: 0 } })
             .count();
         // 评论
@@ -49,8 +49,8 @@ router.get("/:id", (ctx, next) => __awaiter(this, void 0, void 0, function* () {
             .aggregate([
             { $match: { fid: fid, pid: { $in: ids }, status: { $gte: 0 } } },
             { $sort: { ctime: -1 } },
-            { $lookup: { from: "users", localField: "uid", foreignField: "_id", as: "user" } },
-            { $lookup: { from: "users", localField: "touid", foreignField: "_id", as: "touser" } }
+            { $lookup: { from: 'users', localField: 'uid', foreignField: '_id', as: 'user' } },
+            { $lookup: { from: 'users', localField: 'touid', foreignField: '_id', as: 'touser' } }
         ])
             .toArray();
         return { data, sub, total };
