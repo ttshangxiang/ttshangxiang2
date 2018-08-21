@@ -14,12 +14,20 @@ const moment = require("moment");
 const request = require("request");
 const mongodb_1 = require("mongodb");
 const neteast_1 = require("./neteast");
+const user_1 = require("./user");
+const comment_1 = require("./comment");
 const router = new Router({
     prefix: '/api'
 });
 // 网易云接口
 router.use(neteast_1.default.routes());
 router.use(neteast_1.default.allowedMethods());
+// 用户接口
+router.use(user_1.default.routes());
+router.use(user_1.default.allowedMethods());
+// 评论接口
+router.use(comment_1.default.routes());
+router.use(comment_1.default.allowedMethods());
 router.get('/article/:id', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
     const query = (err, db) => __awaiter(this, void 0, void 0, function* () {
         if (err) {

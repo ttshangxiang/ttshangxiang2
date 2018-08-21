@@ -4,6 +4,8 @@ import * as moment from 'moment';
 import * as request from 'request';
 import { ObjectId } from 'mongodb';
 import neteast from './neteast';
+import user from './user';
+import comment from './comment';
 
 const router = new Router({
     prefix: '/api'
@@ -12,6 +14,14 @@ const router = new Router({
 // 网易云接口
 router.use(neteast.routes());
 router.use(neteast.allowedMethods());
+
+// 用户接口
+router.use(user.routes());
+router.use(user.allowedMethods());
+
+// 评论接口
+router.use(comment.routes());
+router.use(comment.allowedMethods());
 
 router.get('/article/:id', async (ctx, next) => {
     const query = async (err, db) => {
