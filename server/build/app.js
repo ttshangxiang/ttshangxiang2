@@ -30,7 +30,7 @@ app.use(bodyParser());
 // session
 app.keys = ['jhqnb'];
 const CONFIG = {
-    key: 'koa:sess',
+    key: 'ttsx:session',
     maxAge: 86400000,
     overwrite: true,
     httpOnly: true,

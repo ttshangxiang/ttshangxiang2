@@ -30,7 +30,7 @@ export class LoginCard extends React.Component <props, states> {
       method: 'post',
       body: JSON.stringify(param),
       headers: {
-        'content-type': 'application/json;charset=UTF-8;'
+        'Content-Type': 'application/json'
       }
     })
     .then(response => response.json())

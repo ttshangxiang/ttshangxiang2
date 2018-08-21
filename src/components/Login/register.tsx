@@ -25,12 +25,19 @@ export class RegisterCard extends React.Component <props, {}> {
       method: 'post',
       body: JSON.stringify(param),
       headers: {
-        'content-type': 'application/json;charset=UTF-8;'
+        'Content-Type': 'application/json'
       }
     })
     .then(response => response.json())
     .then(json => {
-      console.log(json)
+      if (json.code === 0) {
+        window.location.reload()
+      } else {
+        console.log(json.msg)
+      }
+    })
+    .catch(err => {
+      console.log(err)
     })
   }
 
