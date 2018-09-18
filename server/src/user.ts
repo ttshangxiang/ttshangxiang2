@@ -51,6 +51,50 @@ router.post('/register', async (ctx, next) => {
   }
 })
 
+// 登录和注册
+// 登录
+router.post('/loginAndRegister', async (ctx, next) => {
+  const { u, p } = ctx.request.body
+  const r2 = await DB(async (err, db) => {
+    return !err && await db
+      .collection('users')
+      .findOne({username: u, password: p});
+  });
+  if (r2) {
+    delete r2.password;
+    ctx.session.info = r2;
+    ctx.body = { code: 0, data: r2 };
+    return;
+  }
+
+  // 唯一查询
+  const exist = await DB(async (err, db) => {
+    return !err && await db
+      .collection('users')
+      .findOne({username: u});
+  });
+  if (exist) {
+    ctx.body = { code: 1, msg: '用户名已存在' };
+    return;
+  }
+  // 插入
+  const now = new Date();
+  const r = await DB(async (err, db) => {
+    return !err && await db
+      .collection('users')
+      .insert({username: u, password: p, ctime: now, utime: now});
+  });
+  if (r && r.result && r.result.ok) {
+    const info = r.ops[0];
+    delete info.password;
+    ctx.session.info = info;
+    ctx.body = { code: 0, data: info };
+  } else {
+    ctx.body = { code: 1, msg: '插入失败' };
+  }
+
+})
+
 // 登出
 router.get('/logout', (ctx, next) => {
   ctx.session = null

@@ -18,7 +18,12 @@ const router = new Router({
 router.get('/:id', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
     const offset = parseInt(ctx.query.offset) || 0;
     const count = parseInt(ctx.query.count) || 10;
-    const fid = mongodb_1.ObjectId(ctx.params.id);
+    let fid = ctx.params.id;
+    try {
+        fid = mongodb_1.ObjectId(ctx.params.id);
+    }
+    catch (error) {
+    }
     const query = (err, db) => __awaiter(this, void 0, void 0, function* () {
         if (err) {
             return null;
@@ -67,13 +72,19 @@ router.get('/:id', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
 router.post('/:id', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
     const info = ctx.session.info;
     if (!info || !info._id) {
-        ctx.body = { code: 1, msg: '未登录' };
+        ctx.body = { code: -3, msg: '未登录' };
         return;
     }
     const body = ctx.request.body;
     const now = new Date();
+    let fid = ctx.params.id;
+    try {
+        fid = mongodb_1.ObjectId(ctx.params.id);
+    }
+    catch (error) {
+    }
     let comment = {
-        fid: mongodb_1.ObjectId(ctx.params.id),
+        fid: fid,
         status: 0,
         uid: mongodb_1.ObjectId(ctx.session.info._id),
         content: body.content,

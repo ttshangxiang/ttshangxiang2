@@ -21,7 +21,11 @@ interface Comment {
 router.get('/:id', async (ctx, next) => {
   const offset = parseInt(ctx.query.offset) || 0;
   const count = parseInt(ctx.query.count) || 10;
-  const fid = ObjectId(ctx.params.id);
+  let fid = ctx.params.id
+  try {
+    fid = ObjectId(ctx.params.id);
+  } catch (error) {
+  }
   const query = async (err, db) => {
     if (err) {
       return null;
@@ -70,13 +74,18 @@ router.get('/:id', async (ctx, next) => {
 router.post('/:id', async (ctx, next) => {
   const info = ctx.session.info;
   if (!info || !info._id) {
-    ctx.body = { code: 1, msg: '未登录' };
+    ctx.body = { code: -3, msg: '未登录' };
     return;
   }
   const body = ctx.request.body;
   const now = new Date();
+  let fid = ctx.params.id
+  try {
+    fid = ObjectId(ctx.params.id);
+  } catch (error) {
+  }
   let comment: Comment = {
-    fid: ObjectId(ctx.params.id),
+    fid: fid,
     status: 0,
     uid: ObjectId(ctx.session.info._id),
     content: body.content,
