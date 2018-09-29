@@ -6,7 +6,7 @@ const router = new Router({
 })
 
 router.get('/', (ctx) => {
-  let arr = fs.readdirSync(path.resolve(__dirname, '../../dist/kumovideo'));
+  let arr = fs.readdirSync(path.resolve(__dirname, '../../kumovideo'));
   arr = arr.map(o => {
     return `<a href="${o}">${o}</a>`
   })

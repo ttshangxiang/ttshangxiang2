@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 // 程序入口
 const Koa = require("koa");
+const path = require("path");
+const serve = require("koa-static");
 const session = require("koa-session");
 const router_1 = require("./router");
 const app = new Koa();
@@ -27,6 +29,7 @@ app.use((ctx, next) => __awaiter(this, void 0, void 0, function* () {
 var bodyParser = require('koa-bodyparser');
 app.use(bodyParser());
 // app.use(serve(path.join(__dirname, '../../dist'))); //静态文件目录
+app.use(serve(path.join(__dirname, '../../kumovideo'))); //静态文件目录
 // session
 app.keys = ['jhqnb'];
 const CONFIG = {
