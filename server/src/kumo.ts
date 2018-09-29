@@ -8,7 +8,7 @@ const router = new Router({
 router.get('/', (ctx) => {
   let arr = fs.readdirSync(path.resolve(__dirname, '../../kumovideo'));
   arr = arr.map(o => {
-    return `<a href="${o}">${o}</a>`
+    return `<a href="/api/kumo/${o}">${o}</a>`
   })
   ctx.set('Content-Type', 'text/html')
   let body = `
