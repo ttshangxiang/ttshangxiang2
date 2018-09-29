@@ -23,7 +23,6 @@ app.use(bodyParser());
 
 
 // app.use(serve(path.join(__dirname, '../../dist'))); //静态文件目录
-app.use(serve(path.join(__dirname, '../../kumovideo'))); //静态文件目录
 
 // session
 app.keys = ['jhqnb'];
