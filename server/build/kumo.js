@@ -8,6 +8,9 @@ const router = new Router({
 });
 router.get('/', (ctx) => {
     let arr = fs.readdirSync(path.resolve(__dirname, '../../kumovideo'));
+    arr.sort(function (a, b) {
+        return a - b;
+    });
     arr = arr.map(o => {
         return `<a href="/api/kumo/${o}">${o}</a>`;
     });
