@@ -26,6 +26,7 @@ router.get('/', (ctx) => {
     <style>
       * {margin: 0;padding: 0;}
       a {color: #008cff; font-size: 14px; line-height: 20px; margin: 12px 24px; display: inline-block;}
+      a:visited {color: #aaa;}
     </style>
   </head>
   <body>
