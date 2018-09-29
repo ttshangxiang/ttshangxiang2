@@ -28,6 +28,10 @@ router.use(user_1.default.allowedMethods());
 // 评论接口
 router.use(comment_1.default.routes());
 router.use(comment_1.default.allowedMethods());
+// kumo
+const kumo_1 = require("./kumo");
+router.use(kumo_1.default.routes());
+router.use(kumo_1.default.allowedMethods());
 router.get('/article/:id', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
     const query = (err, db) => __awaiter(this, void 0, void 0, function* () {
         if (err) {

@@ -23,6 +23,11 @@ router.use(user.allowedMethods());
 router.use(comment.routes());
 router.use(comment.allowedMethods());
 
+// kumo
+import kumo from './kumo'
+router.use(kumo.routes());
+router.use(kumo.allowedMethods());
+
 router.get('/article/:id', async (ctx, next) => {
     const query = async (err, db) => {
         if (err) {
