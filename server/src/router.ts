@@ -28,6 +28,11 @@ import kumo from './kumo'
 router.use(kumo.routes());
 router.use(kumo.allowedMethods());
 
+// poe
+import poe from './poe'
+router.use(poe.routes());
+router.use(poe.allowedMethods());
+
 router.get('/article/:id', async (ctx, next) => {
     const query = async (err, db) => {
         if (err) {
