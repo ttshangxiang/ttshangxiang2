@@ -7,10 +7,12 @@ const router = new Router({
 
 // 获取点
 router.get('/point', async (ctx, next) => {
+  
   const r = await DB(async (err, db) => {
     return !err && await db
       .collection('poe_points')
-      .find();
+      .find()
+      .toArray();
   });
   if (r) {
     ctx.body = { code: 0, data: r };
@@ -51,8 +53,7 @@ router.put('/point/:id', async (ctx, next) => {
       .update({_id: ObjectId(id)}, {$set: body})
   });
   if (r && r.result && r.result.ok) {
-    const info = r.ops[0];
-    ctx.body = { code: 0, data: info };
+    ctx.body = { code: 0, data: '修改成功' };
   } else {
     ctx.body = { code: 1, msg: '插入失败' };
   }
@@ -68,7 +69,7 @@ router.delete('/point/:id', async (ctx, next) => {
   const r = await DB(async (err, db) => {
     return !err && db
       .collection('poe_points')
-      .remove({ _id: ObjectId(id)});
+      .deleteMany({_id: {$in: [ObjectId(id)]}})
   });
   if (r && r.result && r.result.ok) {
     ctx.body = { code: 0, msg: '删除成功' };
@@ -82,7 +83,8 @@ router.get('/line', async (ctx, next) => {
   const r = await DB(async (err, db) => {
     return !err && await db
       .collection('poe_lines')
-      .find();
+      .find()
+      .toArray();
   });
   if (r) {
     ctx.body = { code: 0, data: r };
@@ -124,8 +126,7 @@ router.put('/line/:id', async (ctx, next) => {
       .update({_id: ObjectId(id)}, {$set: body})
   });
   if (r && r.result && r.result.ok) {
-    const info = r.ops[0];
-    ctx.body = { code: 0, data: info };
+    ctx.body = { code: 0, data: '修改成功' };
   } else {
     ctx.body = { code: 1, msg: '修改失败' };
   }
@@ -141,7 +142,7 @@ router.delete('/line/:id', async (ctx, next) => {
   const r = await DB(async (err, db) => {
     return !err && db
       .collection('poe_lines')
-      .remove({ _id: ObjectId(id)});
+      .deleteMany({_id: {$in: [ObjectId(id)]}})
   });
   if (r && r.result && r.result.ok) {
     ctx.body = { code: 0, msg: '删除成功' };

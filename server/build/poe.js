@@ -19,7 +19,8 @@ router.get('/point', (ctx, next) => __awaiter(this, void 0, void 0, function* ()
     const r = yield db_1.default((err, db) => __awaiter(this, void 0, void 0, function* () {
         return !err && (yield db
             .collection('poe_points')
-            .find());
+            .find()
+            .toArray());
     }));
     if (r) {
         ctx.body = { code: 0, data: r };
@@ -58,8 +59,7 @@ router.put('/point/:id', (ctx, next) => __awaiter(this, void 0, void 0, function
             .update({ _id: mongodb_1.ObjectId(id) }, { $set: body }));
     }));
     if (r && r.result && r.result.ok) {
-        const info = r.ops[0];
-        ctx.body = { code: 0, data: info };
+        ctx.body = { code: 0, data: '修改成功' };
     }
     else {
         ctx.body = { code: 1, msg: '插入失败' };
@@ -75,7 +75,7 @@ router.delete('/point/:id', (ctx, next) => __awaiter(this, void 0, void 0, funct
     const r = yield db_1.default((err, db) => __awaiter(this, void 0, void 0, function* () {
         return !err && db
             .collection('poe_points')
-            .remove({ _id: mongodb_1.ObjectId(id) });
+            .deleteMany({ _id: { $in: [mongodb_1.ObjectId(id)] } });
     }));
     if (r && r.result && r.result.ok) {
         ctx.body = { code: 0, msg: '删除成功' };
@@ -89,7 +89,8 @@ router.get('/line', (ctx, next) => __awaiter(this, void 0, void 0, function* () 
     const r = yield db_1.default((err, db) => __awaiter(this, void 0, void 0, function* () {
         return !err && (yield db
             .collection('poe_lines')
-            .find());
+            .find()
+            .toArray());
     }));
     if (r) {
         ctx.body = { code: 0, data: r };
@@ -128,8 +129,7 @@ router.put('/line/:id', (ctx, next) => __awaiter(this, void 0, void 0, function*
             .update({ _id: mongodb_1.ObjectId(id) }, { $set: body }));
     }));
     if (r && r.result && r.result.ok) {
-        const info = r.ops[0];
-        ctx.body = { code: 0, data: info };
+        ctx.body = { code: 0, data: '修改成功' };
     }
     else {
         ctx.body = { code: 1, msg: '修改失败' };
@@ -145,7 +145,7 @@ router.delete('/line/:id', (ctx, next) => __awaiter(this, void 0, void 0, functi
     const r = yield db_1.default((err, db) => __awaiter(this, void 0, void 0, function* () {
         return !err && db
             .collection('poe_lines')
-            .remove({ _id: mongodb_1.ObjectId(id) });
+            .deleteMany({ _id: { $in: [mongodb_1.ObjectId(id)] } });
     }));
     if (r && r.result && r.result.ok) {
         ctx.body = { code: 0, msg: '删除成功' };
