@@ -32,6 +32,10 @@ router.use(comment_1.default.allowedMethods());
 const kumo_1 = require("./kumo");
 router.use(kumo_1.default.routes());
 router.use(kumo_1.default.allowedMethods());
+// poe
+const poe_1 = require("./poe");
+router.use(poe_1.default.routes());
+router.use(poe_1.default.allowedMethods());
 router.get('/article/:id', (ctx, next) => __awaiter(this, void 0, void 0, function* () {
     const query = (err, db) => __awaiter(this, void 0, void 0, function* () {
         if (err) {
