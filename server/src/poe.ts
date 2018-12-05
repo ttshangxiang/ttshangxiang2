@@ -12,6 +12,7 @@ router.get('/point', async (ctx, next) => {
     return !err && await db
       .collection('poe_points')
       .find()
+      .sort({utime: -1})
       .toArray();
   });
   if (r) {
@@ -27,6 +28,7 @@ router.post('/point', async (ctx, next) => {
 
   // 插入
   body.ctime = new Date();
+  body.utime = new Date();
   const r = await DB(async (err, db) => {
     return !err && await db
       .collection('poe_points')
@@ -84,6 +86,7 @@ router.get('/line', async (ctx, next) => {
     return !err && await db
       .collection('poe_lines')
       .find()
+      .sort({utime: -1})
       .toArray();
   });
   if (r) {
@@ -99,6 +102,7 @@ router.post('/line', async (ctx, next) => {
 
   // 插入
   body.ctime = new Date();
+  body.utime = new Date();
   const r = await DB(async (err, db) => {
     return !err && await db
       .collection('poe_lines')

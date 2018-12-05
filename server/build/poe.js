@@ -20,6 +20,7 @@ router.get('/point', (ctx, next) => __awaiter(this, void 0, void 0, function* ()
         return !err && (yield db
             .collection('poe_points')
             .find()
+            .sort({ utime: -1 })
             .toArray());
     }));
     if (r) {
@@ -34,6 +35,7 @@ router.post('/point', (ctx, next) => __awaiter(this, void 0, void 0, function* (
     const body = ctx.request.body;
     // 插入
     body.ctime = new Date();
+    body.utime = new Date();
     const r = yield db_1.default((err, db) => __awaiter(this, void 0, void 0, function* () {
         return !err && (yield db
             .collection('poe_points')
@@ -90,6 +92,7 @@ router.get('/line', (ctx, next) => __awaiter(this, void 0, void 0, function* () 
         return !err && (yield db
             .collection('poe_lines')
             .find()
+            .sort({ utime: -1 })
             .toArray());
     }));
     if (r) {
@@ -104,6 +107,7 @@ router.post('/line', (ctx, next) => __awaiter(this, void 0, void 0, function* ()
     const body = ctx.request.body;
     // 插入
     body.ctime = new Date();
+    body.utime = new Date();
     const r = yield db_1.default((err, db) => __awaiter(this, void 0, void 0, function* () {
         return !err && (yield db
             .collection('poe_lines')
